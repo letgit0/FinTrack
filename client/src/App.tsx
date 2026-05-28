@@ -5,7 +5,7 @@ import { Dashboard } from './pages/dashboard';
 function App() {
   return (
     <Router>
-    <div className="p-4 bg-amber-50">
+    <div>
       <Routes>
         <Route path="/" element={ <Dashboard /> } />
         <Route path="/auth" element={ <Auth /> } />
