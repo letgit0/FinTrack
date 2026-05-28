@@ -2,6 +2,7 @@ import express from "express";
 import type { Express } from "express";
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from "cors";
 import recordRoutes from "./routes/records";
 
 dotenv.config({ path: ".env.local" });
@@ -9,6 +10,7 @@ dotenv.config({ path: ".env.local" });
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
+app.use(cors());
 app.use(express.json());
 
 const MONGOURI = process.env.MONGOURI;

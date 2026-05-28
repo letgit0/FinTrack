@@ -1,4 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { useUser } from "@clerk/clerk-react";
+import { useRecords } from "../contexts/record-context";
 
 type FormData = {
   type: "income" | "expense";
@@ -18,9 +20,10 @@ function RecordForm() {
     date: "",
     description: "",
   });
+  const { addRecord } = useRecords();
 
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
     setFormData((prev) => ({
       ...prev,
@@ -28,10 +31,18 @@ function RecordForm() {
     }));
   };
 
+  const { user } = useUser();
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(formData);
+    const newRecord = {
+      ...formData,
+      userId: user?.id ?? "",
+      amount: Number(formData.amount),
+    };
+
+    addRecord(newRecord);
 
     setFormData({
       type: "expense",
@@ -46,16 +57,13 @@ function RecordForm() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-100 via-violet-50 to-fuchsia-100 flex items-center justify-center p-6">
       <div className="w-full max-w-2xl bg-white/80 backdrop-blur-lg border border-purple-200 rounded-3xl shadow-2xl p-8">
-
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-purple-900">
             Add a New Record
           </h2>
-
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-          
           <div>
             <label className="block text-sm font-semibold text-purple-700 mb-2">
               Transaction Type
