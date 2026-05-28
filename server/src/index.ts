@@ -2,6 +2,7 @@ import express from "express";
 import type { Express } from "express";
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import recordRoutes from "./routes/records";
 
 dotenv.config({ path: ".env.local" });
 
@@ -23,6 +24,8 @@ mongoose.connect(MONGOURI)
     .catch((err) => {
         console.error('Error connecting to MongoDB:', err);
     });
+
+app.use('/records', recordRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
