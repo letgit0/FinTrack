@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: "https://fin-track-8jpf.vercel.app/",
+    origin: "https://fin-track-8jpf.vercel.app",
     credentials: true,
   })
 );
