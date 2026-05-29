@@ -1,12 +1,16 @@
 import { useUser } from "@clerk/clerk-react";
 import RecordForm from "./RecordForm";
 import RecordList from "./RecordList";
+import { Navbar } from "../../components/Navbar";
+import { Footer } from "../../components/Footer";
 
 export const Dashboard = () => {
   const { user } = useUser();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-violet-50 to-fuchsia-100 px-6 py-10">
+    <>
+    <Navbar />
+    <div className="min-h-screen bg-linear-to-br from-purple-100 via-violet-50 to-fuchsia-100 px-6 py-10">
       <div className="mx-auto max-w-7xl">
         <div className="mb-10 flex flex-col gap-4 rounded-3xl border border-purple-200 bg-white/70 p-8 shadow-xl backdrop-blur-lg md:flex-row md:items-center md:justify-between">
           <div>
@@ -19,8 +23,8 @@ export const Dashboard = () => {
             </p>
           </div>
 
-          <div className="rounded-2xl bg-gradient-to-r from-purple-600 to-violet-600 px-6 py-4 text-white shadow-lg">
-            <p className="text-sm opacity-90">Finance Tracker</p>
+          <div className="rounded-2xl bg-linear-to-r from-purple-600 to-violet-600 px-6 py-4 text-white shadow-lg">
+            <p className="text-sm opacity-90">FinTrack</p>
 
             <h2 className="text-2xl font-bold">Dashboard</h2>
           </div>
@@ -35,7 +39,9 @@ export const Dashboard = () => {
             <RecordList />
           </div>
         </div>
+        <Footer />
       </div>
     </div>
+    </>
   );
 };
