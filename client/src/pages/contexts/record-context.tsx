@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import { useUser } from "@clerk/clerk-react";
 
-interface FinancialRecord {
-  id?: string;
+export interface FinancialRecord {
+  _id?: string;
   userId: string;
   type: string;
   amount: number;
@@ -14,8 +15,8 @@ interface FinancialRecord {
 interface RecordsContextType {
   records: FinancialRecord[];
   addRecord: (record: FinancialRecord) => void;
-  // updateRecord: (id: string, newRecord: FinancialRecord) => void;
-  // deleteRecord: (id: string) => void;
+  updateRecord: (id: string, newRecord: FinancialRecord) => void;
+  deleteRecord: (id: string) => void;
 }
 
 export const RecordsContext = createContext<RecordsContextType | undefined>(
@@ -28,6 +29,22 @@ export const RecordsProvider = ({
   children: React.ReactNode;
 }) => {
   const [records, setRecords] = useState<FinancialRecord[]>([]);
+
+  const {user} = useUser();;
+  const fetchRecords = async () => {
+    if(!user) return;
+    const response = await fetch(`http://localhost:5000/records/getAllByUserId/${user?.id}`);
+
+    if(response.ok){
+      const recs = await response.json();
+      console.log("Fetched records:", recs);
+      setRecords(recs);
+    }
+  }
+
+  useEffect(() =>{
+    fetchRecords();
+  },[user]);
 
   const addRecord = async (record: FinancialRecord) => {
     try {
@@ -51,8 +68,44 @@ export const RecordsProvider = ({
     }
   };
 
+  const updateRecord = async (id: string, newRecord: FinancialRecord) => {
+    try {
+      const response = await fetch(`http://localhost:5000/records/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...newRecord,
+          amount: Number(newRecord.amount),
+        }),
+      });
+      if (response.ok) {
+        const updatedRecord = await response.json();
+        setRecords((prev) =>
+          prev.map((rec) => (rec._id === id ? updatedRecord : rec)),
+        );
+      }
+    } catch (error) {
+      console.error("Failed to update record:", error);
+    }
+  };
+
+  const deleteRecord = async (id: string) => {
+    try {
+      const response = await fetch(`http://localhost:5000/records/${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setRecords((prev) => prev.filter((rec) => rec._id !== id));
+      }
+    } catch (error) {
+      console.error("Failed to delete record:", error);
+    }
+  };
+
   return (
-    <RecordsContext.Provider value={{ records, addRecord }}>
+    <RecordsContext.Provider value={{ records, addRecord, updateRecord, deleteRecord }}>
       {children}
     </RecordsContext.Provider>
   );
