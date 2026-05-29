@@ -10,7 +10,12 @@ dotenv.config({ path: ".env.local" });
 const app: Express = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://fin-track-8jpf.vercel.app/",
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 const MONGOURI = process.env.MONGOURI;
