@@ -37,7 +37,7 @@ export const RecordsProvider = ({
   const {user} = useUser();;
   const fetchRecords = async () => {
     if(!user) return;
-    const response = await fetch(`http://localhost:5000/records/getAllByUserId/${user?.id}`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/records/getAllByUserId/${user?.id}`);
 
     if(response.ok){
       const recs = await response.json();
@@ -52,7 +52,7 @@ export const RecordsProvider = ({
 
   const addRecord = async (record: FinancialRecord) => {
     try {
-      const response = await fetch("http://localhost:5000/records", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/records`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export const RecordsProvider = ({
 
   const updateRecord = async (id: string, newRecord: FinancialRecord) => {
     try {
-      const response = await fetch(`http://localhost:5000/records/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/records/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +97,7 @@ export const RecordsProvider = ({
 
   const deleteRecord = async (id: string) => {
     try {
-      const response = await fetch(`http://localhost:5000/records/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/records/${id}`, {
         method: "DELETE",
       });
       if (response.ok) {

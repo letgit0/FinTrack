@@ -29,6 +29,10 @@ mongoose.connect(MONGOURI)
 
 app.use('/records', recordRoutes);
 
+app.get('/', (req, res) => {
+    res.send('Server For Personal Finance Tracker: FinTrack is running');
+});
+
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
