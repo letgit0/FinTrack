@@ -1,4 +1,5 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import type{ ChangeEvent, FormEvent } from "react";
+import {useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useRecords } from "../contexts/record-context";
 
