@@ -64,7 +64,10 @@ function RecordList() {
         value={editingValue}
         onChange={(e) => setEditingValue(e.target.value)}
         onBlur={() => handleUpdate(rowIndex, columnId, editingValue.toString())}
-        className="w-full rounded-md border border-transparent bg-transparent px-2 py-2 text-sm text-slate-700 outline-none transition hover:bg-slate-50 focus:border-purple-200 focus:bg-white focus:ring-2 focus:ring-purple-100"
+        className={`w-full rounded-md border border-transparent bg-transparent p-2 text-sm text-slate-700 outline-none transition
+      hover:border-purple-200 hover:bg-purple-50/60
+      focus:border-purple-200 focus:bg-white focus:ring-2 focus:ring-purple-100
+      ${columnId === "amount" ? "text-right" : "text-left"}`}
       />
     );
   };
@@ -76,7 +79,7 @@ function RecordList() {
         header: "Type",
         cell: ({ row }) => (
           <span
-            className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-medium ${
+            className={`inline-flex items-center rounded-full px-4 py-2 text-xs font-medium ${
               row.original.type.toLowerCase() === "income"
                 ? "bg-emerald-100 text-emerald-700"
                 : "bg-rose-100 text-rose-700"
@@ -154,7 +157,7 @@ function RecordList() {
           );
 
           return (
-            <div className="text-center text-sm whitespace-nowrap text-slate-500">
+            <div className="text-left text-sm whitespace-nowrap text-slate-500">
               {formattedDate}
             </div>
           );
@@ -171,9 +174,9 @@ function RecordList() {
                 deleteRecord(row.original._id);
               }
             }}
-            className="text-sm font-medium text-slate-400 transition hover:text-red-500"
+            className="text-sm font-medium text-slate-400/80 transition-colors duration-200 hover:text-red-500"
           >
-            🗑
+            Delete
           </button>
         ),
       },
@@ -191,23 +194,19 @@ function RecordList() {
     <div className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
       <div className="mb-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
-          <h2 className="text-3xl font-bold text-slate-900">
+          <h2 className="text-3xl font-bold text-purple-900">
             Financial Records
           </h2>
 
-          <p className="mt-1 text-sm text-slate-500">
-            Manage transactions
-          </p>
+          <p className="mt-1 text-sm text-slate-500">Manage transactions</p>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 px-5 py-3">
-          <p className="text-xs uppercase tracking-wide text-slate-500">
+        <div className="rounded-2xl bg-gradient-to-r from-purple-600 to-violet-600 px-5 py-3 text-white shadow-lg">
+          <p className="text-xs uppercase tracking-wide opacity-80">
             Total Records
           </p>
 
-          <h3 className="text-2xl font-bold text-slate-900">
-            {filteredRecords.length}
-          </h3>
+          <h3 className="text-2xl font-bold">{filteredRecords.length}</h3>
         </div>
       </div>
 
@@ -215,7 +214,7 @@ function RecordList() {
         <select
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
-          className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
+          className="rounded-2xl border border-purple-200 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-purple-500 focus:ring-4 focus:ring-purple-200"
         >
           <option value="">All Types</option>
           <option value="income">Income</option>
@@ -227,27 +226,27 @@ function RecordList() {
           placeholder="Filter by category"
           value={categoryFilter}
           onChange={(e) => setCategoryFilter(e.target.value)}
-          className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
+          className="rounded-2xl border border-purple-200 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition placeholder:text-purple-300 focus:border-purple-500 focus:ring-4 focus:ring-purple-200"
         />
 
         <input
           type="date"
           value={dateFilter}
           onChange={(e) => setDateFilter(e.target.value)}
-          className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 outline-none transition focus:border-purple-300 focus:ring-2 focus:ring-purple-100"
+          className="rounded-2xl border border-purple-200 bg-white px-4 py-3 text-gray-700 shadow-sm outline-none transition focus:border-purple-500 focus:ring-4 focus:ring-purple-200"
         />
       </div>
 
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-purple-100 shadow-sm">
         <div className="overflow-x-auto">
           <table className="min-w-full text-sm">
-            <thead className="border-b border-slate-200 bg-slate-50 text-slate-600">
+            <thead className="bg-gradient-to-r from-purple-600 to-violet-600 text-white">
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
                     <th
                       key={header.id}
-                      className="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider text-slate-500"
+                      className="px-6 py-[16px] text-left text-xs font-semibold uppercase tracking-wider"
                     >
                       {flexRender(
                         header.column.columnDef.header,
@@ -259,16 +258,16 @@ function RecordList() {
               ))}
             </thead>
 
-            <tbody className="divide-y divide-slate-100 bg-white">
+            <tbody className="divide-y divide-purple-100 bg-white">
               {table.getRowModel().rows.map((row) => (
                 <tr
                   key={row.id}
-                  className="transition-colors hover:bg-slate-50"
+                  className="transition-colors hover:bg-purple-50"
                 >
                   {row.getVisibleCells().map((cell) => (
                     <td
                       key={cell.id}
-                      className="px-6 py-4 align-middle text-sm text-slate-700"
+                      className="px-6 py-3 align-middle text-sm text-slate-700"
                     >
                       {flexRender(
                         cell.column.columnDef.cell,
@@ -284,17 +283,15 @@ function RecordList() {
 
         {filteredRecords.length === 0 && (
           <div className="bg-white py-12 text-center">
-            <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-slate-100">
+            <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-purple-100">
               <span className="text-2xl">📊</span>
             </div>
 
-            <h3 className="text-lg font-semibold text-slate-900">
+            <h3 className="text-lg font-semibold text-purple-900">
               No Records Found
             </h3>
 
-            <p className="mt-1 text-slate-500">
-              Try adjusting your filters.
-            </p>
+            <p className="mt-1 text-purple-500">Try adjusting your filters.</p>
           </div>
         )}
       </div>

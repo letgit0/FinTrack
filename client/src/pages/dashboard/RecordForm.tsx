@@ -55,7 +55,7 @@ function RecordForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-violet-50 to-fuchsia-100 flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-violet-50 to-fuchsia-100 flex items-center justify-center p-2">
       <div className="w-full max-w-2xl bg-white/80 backdrop-blur-lg border border-purple-200 rounded-3xl shadow-2xl p-8">
         <div className="mb-8">
           <h2 className="text-3xl font-bold text-purple-900">
