@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import { useUser } from "@clerk/clerk-react";
 
 export interface FinancialRecord {
@@ -17,6 +17,10 @@ interface RecordsContextType {
   addRecord: (record: FinancialRecord) => void;
   updateRecord: (id: string, newRecord: FinancialRecord) => void;
   deleteRecord: (id: string) => void;
+  summary: {
+    income: number;
+    expenses: number;
+  };
 }
 
 export const RecordsContext = createContext<RecordsContextType | undefined>(
@@ -104,8 +108,24 @@ export const RecordsProvider = ({
     }
   };
 
+  const summary = useMemo(() => {
+    const income = records
+      .filter(r => r.type === "income")
+      .reduce((sum, r) => sum + r.amount, 0);
+
+    const expenses = records
+      .filter(r => r.type === "expense")
+      .reduce((sum, r) => sum + r.amount, 0);
+
+
+    return {
+      income,
+      expenses,
+    };
+  }, [records]);
+
   return (
-    <RecordsContext.Provider value={{ records, addRecord, updateRecord, deleteRecord }}>
+    <RecordsContext.Provider value={{ records, addRecord, updateRecord, deleteRecord, summary }}>
       {children}
     </RecordsContext.Provider>
   );

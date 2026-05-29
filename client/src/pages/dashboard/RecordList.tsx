@@ -142,7 +142,7 @@ function RecordList() {
 
       {
         accessorKey: "date",
-        header: "Date & Time",
+        header: "Date",
         cell: ({ row }) => {
           const formattedDate = new Date(row.original.date).toLocaleString(
             "en-IN",
@@ -150,9 +150,6 @@ function RecordList() {
               day: "numeric",
               month: "short",
               year: "numeric",
-              hour: "numeric",
-              minute: "2-digit",
-              hour12: true,
             },
           );
 
