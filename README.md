@@ -8,6 +8,8 @@
 [![MongoDB](https://img.shields.io/badge/MongoDB-Database-47A248?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![Clerk](https://img.shields.io/badge/Clerk-Auth-6C47FF?logo=clerk&logoColor=white)](https://clerk.com/)
 
+🔗 **[Visit FinTrack](https://fin-track-8jpf.vercel.app)**
+
 ---
 
 ## ✨ Features
@@ -157,6 +159,22 @@ npm run dev       # Start development server (ts-node / nodemon)
 npm run build     # Compile TypeScript to JS
 npm start         # Start production server
 ```
+
+---
+
+## 📸 Screenshots
+
+### Landing Page
+![Landing](docs/images/landing.png)
+
+### Dashboard
+![Dashboard](docs/images/home.png)
+
+### Managing Records
+![Managing Records](docs/images/dashboard.png)
+
+### Analytics
+![Analytics](docs/images/analytics.png)
 
 ---
 
